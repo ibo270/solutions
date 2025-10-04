@@ -1,0 +1,6 @@
+[
+  {"model":"airlines.company","pk":1,"fields":{"name":"SkyWays","code":"SW","is_active":true}},
+  {"model":"airlines.company","pk":2,"fields":{"name":"AeroJet","code":"AJ","is_active":true}},
+  {"model":"airlines.flight","pk":1,"fields":{"company":1,"flight_no":"SW-101","origin":"Bishkek","destination":"Almaty","departure_at":"2030-05-01T08:00:00Z","arrival_at":"2030-05-01T09:00:00Z","base_price":"120.00","seats_total":100,"seats_available":100,"status":"scheduled"}},
+  {"model":"airlines.flight","pk":2,"fields":{"company":2,"flight_no":"AJ-202","origin":"Bishkek","destination":"Tashkent","departure_at":"2030-05-02T10:00:00Z","arrival_at":"2030-05-02T12:00:00Z","base_price":"150.00","seats_total":120,"seats_available":120,"status":"scheduled"}}
+]

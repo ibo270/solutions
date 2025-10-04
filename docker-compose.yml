@@ -1,0 +1,69 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-app}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    # gunicorn — поменяй модуль WSGI под свой проект
+    command: >
+      gunicorn core.wsgi:application
+      --bind 0.0.0.0:8000
+      --workers 3
+      --timeout 60
+    ports:
+      - "8000:8000"   # можно убрать в проде, если не нужен внешний доступ к бэку
+    volumes:
+      # Именованные тома для статики/медиа, чтобы их мог прочитать фронтовый nginx
+      - staticfiles:/vol/web/static
+      - mediafiles:/vol/web/media
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8000/health || exit 1"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_started
+    ports:
+      - "80:80"
+    # Если nginx раздаёт статику/медиа из бэка:
+    volumes:
+      - staticfiles:/static:ro
+      - mediafiles:/media:ro
+    # Никаких override главного nginx.conf — базовый конфиг из образа + твой conf.d/default.conf
+
+volumes:
+  pgdata:
+  staticfiles:
+  mediafiles:
