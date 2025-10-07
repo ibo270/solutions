@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aurora Air</title>
+    <script>
+      (function () {
+        const saved = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const root = document.documentElement;
+        if (saved === "dark" || (!saved && prefersDark)) root.classList.add("dark");
+        else root.classList.remove("dark");
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-CxY2GwdE.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-CDaM45aE.js">
+    <link rel="modulepreload" crossorigin href="/assets/router-BnWwmHRR.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-Dx4V6NHF.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

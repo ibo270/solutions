@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Company Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .card {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Панель управления компанией - ТЕСТ</h1>
+        <p>Если вы видите эту страницу, значит статический сервер работает!</p>
+        
+        <div class="card">
+            <h2>Статистика</h2>
+            <p>Всего рейсов: 5</p>
+            <p>Продано билетов: 12</p>
+            <p>Доход: $2,400</p>
+        </div>
+        
+        <div class="card">
+            <h2>Действия</h2>
+            <button class="btn" onclick="alert('Добавить компанию')">Добавить компанию</button>
+            <button class="btn" onclick="alert('Добавить рейс')">Добавить рейс</button>
+            <button class="btn" onclick="alert('Управление пассажирами')">Управление пассажирами</button>
+        </div>
+        
+        <div class="card">
+            <h2>Статус</h2>
+            <p>✅ Компонент рендерится</p>
+            <p>✅ Стили загружаются</p>
+            <p>✅ JavaScript работает</p>
+            <p>⏰ Время: <span id="time"></span></p>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('time').textContent = new Date().toLocaleString();
+        console.log('Test page loaded successfully');
+    </script>
+</body>
+</html>

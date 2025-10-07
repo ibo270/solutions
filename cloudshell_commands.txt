@@ -1,0 +1,54 @@
+# Команды для выполнения в Google Cloud Shell для создания супер админа
+
+# 1. Клонируем репозиторий
+git clone https://github.com/your-username/flying_tickets_mvp.git
+cd flying_tickets_mvp
+
+# 2. Устанавливаем зависимости
+pip install -r backend/requirements.txt
+
+# 3. Настраиваем переменные окружения
+export DJANGO_SETTINGS_MODULE="config.settings"
+export SECRET_KEY="django-insecure-your-super-secret-key-for-production"
+export DB_ENGINE="postgres"
+export DB_NAME="flying_tickets"
+export DB_USER="postgres"
+export DB_PASSWORD="SecurePassword123!"
+export DB_HOST="/cloudsql/theta-totem-474113-v6:us-central1:flying-tickets-db"
+export DB_PORT="5432"
+
+# 4. Выполняем миграции
+cd backend
+python manage.py migrate
+
+# 5. Создаем супер админа
+python manage.py shell -c "
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
+username = 'admin'
+email = 'admin@example.com'
+password = 'admin123'
+
+try:
+    user = User.objects.get(username=username)
+    print(f'Пользователь {username} уже существует. Обновляем пароль...')
+    user.set_password(password)
+    user.is_staff = True
+    user.is_superuser = True
+    user.is_active = True
+    user.save()
+    print(f'✅ Пароль для {username} обновлен: {password}')
+except User.DoesNotExist:
+    user = User.objects.create_superuser(username, email, password)
+    print(f'✅ Создан новый супер админ: {username} / {password}')
+
+print(f'🌐 Данные для входа:')
+print(f'URL: https://flying-tickets-r7jgzdkqma-uc.a.run.app/admin/')
+print(f'Логин: {username}')
+print(f'Пароль: {password}')
+"
+
+
+
+
