@@ -10,3 +10,6 @@ class FlightAdmin(admin.ModelAdmin):
     list_display = ('id','company','flight_no','origin','destination','departure_at','arrival_at','seats_available','status')
     list_filter = ('company','status','origin','destination')
     search_fields = ('flight_no',)
+
+
+    fsddffdsfafd
